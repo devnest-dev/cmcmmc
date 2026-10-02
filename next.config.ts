@@ -9,6 +9,16 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        // Old 5 MB OG image; previously shared links still point here.
+        source: "/cover.png",
+        destination: "/cover.jpg",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

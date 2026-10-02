@@ -6,7 +6,7 @@ export const siteShortName = "2nd CM-CMMC";
 export const siteDescription =
   "Biennial gathering of Church media ministers in Cebu focused on formation, reflection, and mission-driven media ministry.";
 
-export const ogImage = "/cover.png";
+export const ogImage = "/cover.jpg";
 export const logoImage = "/logo.png";
 
 export const organizationName = "Roman Catholic Archdiocese of Cebu";

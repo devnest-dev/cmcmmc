@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { getArchdioceseAttendanceCounts } from "@/lib/attendance/dashboard.server";
+import { getCurrentEventDay } from "@/lib/event-day";
 import LiveAttendanceDashboard from "./LiveAttendanceDashboard";
 
 export const dynamic = "force-dynamic";
@@ -10,7 +11,12 @@ export const metadata: Metadata = {
   description: "Live attendance counts by archdiocese.",
 };
 
-export default async function LiveAttendancePage() {
+export default async function LiveAttendancePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ display?: string }>;
+}) {
+  const { display } = await searchParams;
   const counts = await getArchdioceseAttendanceCounts();
 
   return (
@@ -25,7 +31,11 @@ export default async function LiveAttendancePage() {
         </div>
 
         <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-10">
-          <LiveAttendanceDashboard initialCounts={counts} />
+          <LiveAttendanceDashboard
+            initialCounts={counts}
+            initialDay={getCurrentEventDay()}
+            initialDisplay={display === "portrait"}
+          />
         </div>
       </div>
     </main>

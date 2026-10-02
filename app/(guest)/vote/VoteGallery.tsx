@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import type { PublicCompetitionEntry } from "@/lib/competition";
 import EntryCard from "./EntryCard";
@@ -19,29 +19,50 @@ export default function VoteGallery({
 }) {
   const [entries, setEntries] = useState(initialEntries);
   const [activeEntryId, setActiveEntryId] = useState<string | null>(null);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  async function refreshResults() {
-    try {
-      const response = await fetch("/api/vote/results");
-      const result = (await response.json()) as { ok: boolean; entries?: PublicCompetitionEntry[] };
-
-      if (result.ok && result.entries) {
-        setEntries(result.entries);
-      }
-    } catch {
-      // Silently ignore polling failures; the next interval will retry.
-    }
-  }
 
   useEffect(() => {
-    intervalRef.current = setInterval(refreshResults, POLL_INTERVAL_MS);
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
+    // Results are final once voting closes, so the server-rendered entries are enough.
+    if (!votingOpen) {
+      return;
+    }
+
+    let inFlight = false;
+
+    async function refreshResults() {
+      if (inFlight || document.hidden) {
+        return;
       }
+
+      inFlight = true;
+
+      try {
+        const response = await fetch("/api/vote/results");
+        const result = (await response.json()) as { ok: boolean; entries?: PublicCompetitionEntry[] };
+
+        if (result.ok && result.entries) {
+          setEntries(result.entries);
+        }
+      } catch {
+        // Silently ignore polling failures; the next interval will retry.
+      } finally {
+        inFlight = false;
+      }
+    }
+
+    function handleVisibilityChange() {
+      if (!document.hidden) {
+        refreshResults();
+      }
+    }
+
+    const interval = window.setInterval(refreshResults, POLL_INTERVAL_MS);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      window.clearInterval(interval);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, []);
+  }, [votingOpen]);
 
   const activeEntry = entries.find((entry) => entry.id === activeEntryId) ?? null;
 

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function CTASection() {
@@ -14,7 +15,14 @@ export default function CTASection() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center h-full gap-10">
         {/* Left image placeholder */}
         <div className="w-full lg:w-2/3 max-w-full rounded-xl overflow-hidden bg-white/10 border border-white/20 flex flex-col items-center justify-center">
-          <img src="/cta.jpg" alt="CTA Image" className="w-full h-full object-cover" />
+          <Image
+            src="/cta.jpg"
+            alt="CTA Image"
+            width={2048}
+            height={1365}
+            sizes="(min-width: 1024px) 66vw, 100vw"
+            className="w-full h-full object-cover"
+          />
         </div>
 
         {/* Right buttons */}

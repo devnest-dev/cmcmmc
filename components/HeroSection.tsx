@@ -5,7 +5,14 @@ export default function HeroSection() {
   return (
     <section className="relative w-full lg:h-screen overflow-hidden">
       {/* Placeholder hero image */}
-      <div className="absolute inset-0 bg-[url('/hero.jpg')] bg-cover bg-center opacity-60 z-0" />
+      <Image
+        src="/hero.jpg"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover object-center opacity-60 z-0"
+      />
 
       {/* Centered congress branding */}
       <div className="relative z-20 flex flex-col items-center justify-center h-full text-center px-4">

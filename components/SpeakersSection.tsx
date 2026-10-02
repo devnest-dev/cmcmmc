@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { SPEAKERS } from "@/lib/speakers";
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import SpeakerDetails from "./SpeakerDetails";
@@ -16,9 +17,12 @@ function Avatar({
       className={`${dim} rounded-full bg-[#f0941430] border-2 border-[#f09414] flex items-center justify-center shrink-0`}
     >
       {imgUrl ? (
-        <img
+        <Image
           src={imgUrl}
           alt="Avatar"
+          width={3375}
+          height={3375}
+          sizes={size === "lg" ? "96px" : "64px"}
           className="w-full h-full object-cover rounded-full"
         />
       ) : (
@@ -63,9 +67,12 @@ export default function SpeakersSection() {
         <div className="flex flex-col lg:flex-row gap-8 items-start h-full">
           {/* Left: speakers image (hidden on small screens) */}
           <div className="hidden lg:block w-1/3 rounded-xl overflow-hidden h-full">
-            <img
+            <Image
               src="/speakers.jpg"
               alt="Speakers"
+              width={1024}
+              height={1536}
+              sizes="33vw"
               className="w-full h-full object-cover"
             />
           </div>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { DialogTitle } from "./ui/dialog";
 import { Speaker } from "@/lib/speakers";
 
@@ -6,9 +7,12 @@ const SpeakerDetails = ({ speaker }: { speaker: Speaker }) => {
     speaker;
   return (
     <div className="space-y-5 pt-5">
-      <img
+      <Image
         src={imgUrl}
         alt={name}
+        width={3375}
+        height={3375}
+        sizes="288px"
         // The height and object position are hardcoded for specific speakers to ensure the best presentation of their photos. This is a bit hacky but it allows us to use the same component for all speakers without needing custom styling for each one.
         className={`
             ${name.includes("Kia") || name.includes("Albert") || name.includes("Gretchen") ? "h-72" : "h-72"} 

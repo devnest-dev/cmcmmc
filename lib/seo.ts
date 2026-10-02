@@ -1,4 +1,4 @@
-export const siteUrl = "https://cmmc.thearchdioceseofcebu.com";
+export const siteUrl = "https://cmcmmc.thearchdioceseofcebu.com";
 export const siteBaseUrl = new URL(siteUrl);
 
 export const siteName = "2nd Cebu Metropolitan Catholic Mass Media Congress (CM-CMMC)";

@@ -81,7 +81,7 @@ export default function LiveAttendanceDisplay({
   }, []);
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col overflow-hidden bg-[radial-gradient(120%_55%_at_50%_0%,#1f3d73_0%,#0c1a38_55%,#070f24_100%)] px-[6vw] pb-[3vh] pt-[4vh] text-white">
+    <div className="fixed inset-0 z-50 flex flex-col overflow-hidden bg-[radial-gradient(120%_55%_at_50%_0%,#1f3d73_0%,#0c1a38_55%,#070f24_100%)] px-[2.5vw] pb-[1.5vh] pt-[2vh] text-white">
       <div className="group absolute right-[3vw] top-[2.5vh] z-10 flex gap-2 opacity-30 transition-opacity hover:opacity-100 focus-within:opacity-100">
         <button
           type="button"
@@ -102,31 +102,31 @@ export default function LiveAttendanceDisplay({
       </div>
 
       <header className="text-center">
-        <p className="inline-flex items-center gap-[1.2vw] text-[min(1.6vh,3vw)] font-semibold uppercase tracking-[0.35em] text-[#5fc2c8]">
-          <span className="relative flex size-[min(1.1vh,2vw)]">
+        <p className="inline-flex items-center gap-[1.2vw] text-[min(2.4vh,4.4vw)] font-semibold uppercase tracking-[0.35em] text-[#5fc2c8]">
+          <span className="relative flex size-[min(1.6vh,3vw)]">
             <span className="absolute inline-flex size-full animate-ping rounded-full bg-[#5fc2c8] opacity-75" />
             <span className="relative inline-flex size-full rounded-full bg-[#5fc2c8]" />
           </span>
           Live Attendance
         </p>
-        <h1 className="mt-[1.2vh] text-[min(2.6vh,5vw)] font-semibold text-white/90">Check-ins by archdiocese</h1>
-        <p className="mt-[0.8vh] text-[min(1.7vh,3.2vw)] text-white/55">
+        <h1 className="mt-[0.8vh] text-[min(3.8vh,7vw)] font-semibold text-white/90">Check-ins by archdiocese</h1>
+        <p className="mt-[0.4vh] text-[min(2.6vh,4.8vw)] text-white/60">
           {DAY_LABELS[day]} · {formatEventDayDate(day)}
         </p>
 
-        <p className="mt-[2.5vh] text-[min(10vh,19vw)] font-extrabold leading-none tabular-nums tracking-tight">
+        <p className="mt-[1.2vh] text-[min(14vh,26vw)] font-extrabold leading-none tabular-nums tracking-tight">
           {shownTotal.toLocaleString()}
         </p>
-        <p className="mt-[0.8vh] text-[min(1.6vh,3vw)] font-semibold uppercase tracking-[0.3em] text-white/50">
+        <p className="mt-[0.4vh] text-[min(2.4vh,4.4vw)] font-semibold uppercase tracking-[0.3em] text-white/60">
           Checked in
         </p>
       </header>
 
-      <div className="relative mt-[3vh] min-h-0 flex-1">
+      <div className="relative mt-[1.5vh] min-h-0 flex-1">
         <PortraitBubbleChart data={data} />
       </div>
 
-      <footer className="mt-[2vh] flex items-center justify-between text-[min(1.3vh,2.6vw)] text-white/40">
+      <footer className="mt-[1vh] flex items-center justify-between text-[min(1.9vh,3.4vw)] text-white/50">
         <span>{siteShortName}</span>
         <span className="tabular-nums">
           {lastUpdatedAt

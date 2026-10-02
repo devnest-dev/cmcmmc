@@ -25,7 +25,7 @@ type PlacedBubble = {
 // Gap between neighbouring bubbles, in screen pixels.
 const GAP = 12;
 // Share of the drawing area the bubbles should cover before collisions settle.
-const FILL_RATIO = 0.5;
+const FILL_RATIO = 0.6;
 // How much consecutive bubbles in the zig-zag column overlap vertically (1 = stacked flush).
 const STACK_OVERLAP = 0.74;
 const TICKS = 300;
@@ -53,9 +53,23 @@ function columnSpan(radii: number[]): number {
   ) + (radii.at(-1) ?? 0);
 }
 
+// Landscape screens reuse the portrait packing on swapped axes, so the zig-zag runs
+// along the long edge and the bubbles fill the whole screen either way.
+function computeLayout(data: BubbleDatum[], { width, height }: Size): PlacedBubble[] {
+  if (width <= height) {
+    return computePortraitLayout(data, { width, height });
+  }
+
+  return computePortraitLayout(data, { width: height, height: width }).map((bubble) => ({
+    ...bubble,
+    x: bubble.y,
+    y: bubble.x,
+  }));
+}
+
 // Packs bubbles into a tall, narrow box: seed them in a zig-zag column that spans the
 // height, then let collision forces settle them into an organic arrangement.
-function computeLayout(data: BubbleDatum[], { width, height }: Size): PlacedBubble[] {
+function computePortraitLayout(data: BubbleDatum[], { width, height }: Size): PlacedBubble[] {
   if (width <= 0 || height <= 0 || data.length === 0) {
     return [];
   }
@@ -105,9 +119,9 @@ function computeLayout(data: BubbleDatum[], { width, height }: Size): PlacedBubb
   return nodes.map((node) => ({ datum: node.datum, r: node.r, x: node.x ?? 0, y: node.y ?? 0 }));
 }
 
-function splitName(archdiocese: string): { prefix: string | null; name: string } {
-  const match = archdiocese.match(/^((?:Arch)?diocese of) (.+)$/i);
-  return match ? { prefix: match[1], name: match[2] } : { prefix: null, name: archdiocese };
+// Shows just the place name ("Archdiocese of Cebu" → "Cebu").
+function shortName(archdiocese: string): string {
+  return archdiocese.replace(/^(?:Arch)?diocese of /i, "");
 }
 
 function Bubble({
@@ -128,14 +142,11 @@ function Bubble({
   const fill = isZero ? "rgba(255,255,255,0.04)" : GLOW_RAMP[index];
   const textColor = isZero ? "rgba(255,255,255,0.55)" : index >= DARK_TEXT_FROM_INDEX ? NAVY_TEXT : "#ffffff";
 
-  const { prefix, name } = splitName(datum.archdiocese);
-  const nameSize = Math.min(r * 0.3, (r * 1.5) / (0.6 * name.length));
-  const countSize = r * 0.34;
-  const prefixSize = nameSize * 0.42;
-  const showPrefix = prefix !== null && prefixSize >= 9;
+  const name = shortName(datum.archdiocese);
+  const nameSize = Math.min(r * 0.34, (r * 1.7) / (0.58 * name.length));
+  const countSize = r * 0.42;
 
   const lines = [
-    ...(showPrefix ? [{ key: "prefix", text: prefix.toUpperCase(), size: prefixSize, weight: 600, opacity: 0.75, gap: 1.6 }] : []),
     { key: "name", text: name, size: nameSize, weight: 600, opacity: 1, gap: 1.15 },
     { key: "count", text: shownCount.toLocaleString(), size: countSize, weight: 800, opacity: 1, gap: 1 },
   ];
@@ -183,7 +194,6 @@ function Bubble({
                 fontSize={line.size}
                 fontWeight={line.weight}
                 opacity={line.opacity}
-                letterSpacing={line.key === "prefix" ? "0.18em" : undefined}
                 className="tabular-nums"
               >
                 {line.text}

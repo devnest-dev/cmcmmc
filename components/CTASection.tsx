@@ -33,20 +33,22 @@ export default function CTASection() {
           >
             Register Here
           </Link>
-          <Link
+          <a
             href="/2nd-CM-CMMC-Program.pdf"
             target="_blank"
+            rel="noopener noreferrer"
             className="bg-[#56aeff] hover:bg-[#22959d] text-white font-bold text-sm uppercase tracking-wide px-6 py-4 rounded-lg text-center transition-colors flex items-center justify-center"
           >
             View Congress Program
-          </Link>
-          <Link
+          </a>
+          <a
             href="/2nd-CM-CMMC-Congress-Primer-v1.pdf"
             target="_blank"
+            rel="noopener noreferrer"
             className="bg-[#56aeff] hover:bg-[#22959d] text-white font-bold text-sm uppercase tracking-wide px-6 py-4 rounded-lg text-center transition-colors flex items-center justify-center"
           >
             Frequently Asked Questions
-          </Link>
+          </a>
           <Link
             href="/contact-us"
             className="bg-[#56aeff] hover:bg-[#22959d] text-white font-bold text-sm uppercase tracking-wide px-6 py-4 rounded-lg text-center transition-colors flex items-center justify-center"

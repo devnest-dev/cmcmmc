@@ -90,6 +90,7 @@ export default function Navbar() {
                       <Link
                         href={link.href}
                         target={link.external ? "_blank" : undefined}
+                        prefetch={link.external ? false : undefined}
                         className="text-xs font-semibold uppercase tracking-wide cursor-pointer"
                       >
                         {link.label}
@@ -142,6 +143,7 @@ export default function Navbar() {
                       <Link
                         href={link.href}
                         target={link.external ? "_blank" : undefined}
+                        prefetch={link.external ? false : undefined}
                         className="text-sm font-semibold text-black uppercase tracking-wide hover:text-[#0091C0] transition-colors"
                       >
                         {link.label}

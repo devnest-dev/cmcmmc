@@ -31,7 +31,7 @@ export default function HeroSection() {
             </div>
 
             <div className="relative z-10 w-64 h-64 sm:w-80 sm:h-80">
-              <Image src="/logo.png" alt="CM-CMMC Logo" fill className="object-contain" />
+              <Image src="/logo.png" alt="CM-CMMC Logo" fill sizes="(min-width: 640px) 320px, 256px" className="object-contain" />
             </div>
           </div>
       </div>

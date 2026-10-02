@@ -191,7 +191,7 @@ export default function AdminDashboard({
               <Link href="/admin/submissions/new">Add entry</Link>
             </Button>
             <Button asChild variant="outline">
-              <Link href="/admin/export">Export CSV</Link>
+              <Link href="/admin/export" prefetch={false}>Export CSV</Link>
             </Button>
           </div>
         </div>
